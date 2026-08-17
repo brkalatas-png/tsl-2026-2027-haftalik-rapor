@@ -47,7 +47,7 @@ details{margin-top:16px;background:var(--surface);border:1px solid var(--line);b
   </header>
 
   <section class="hero">
-    <div><div class="eyebrow">Haftalık ödül merkezi</div><h1><span id="weekTitle">1. Hafta</span><br>Güncel Rapor</h1><p>Dokuz oyuncunun haftalık performansı, ödül dağılımı ve sezon toplamı. Veriler canlı tablodan alınır; aynı bağlantı her hafta otomatik güncellenir.</p></div>
+    <div><div class="eyebrow">Haftalık ödül merkezi</div><h1><span id="weekTitle">1. Hafta</span><br>Güncel Rapor</h1><p>On oyuncunun haftalık performansı, ödül dağılımı ve sezon toplamı. Veriler canlı tablodan alınır; aynı bağlantı her hafta otomatik güncellenir.</p></div>
     <div class="stamp"><strong id="updated">Veri yükleniyor…</strong><span>Europe/Istanbul</span></div>
   </section>
 
@@ -58,15 +58,15 @@ details{margin-top:16px;background:var(--surface);border:1px solid var(--line);b
   </section>
 
   <section class="metrics" aria-label="Temel göstergeler">
-    <article class="metric"><div class="label">Aktif oyuncu</div><div class="value" id="activePlayers">9</div><div class="hint">Sabit katılımcı sayısı</div></article>
+    <article class="metric"><div class="label">Aktif oyuncu</div><div class="value" id="activePlayers">10</div><div class="hint">Güncel katılımcı sayısı</div></article>
     <article class="metric"><div class="label">Kişi başı / hafta</div><div class="value">250 TL</div><div class="hint">Haftalık katkı</div></article>
-    <article class="metric"><div class="label">Haftalık havuz</div><div class="value">2.250 TL</div><div class="hint">9 × 250 TL</div></article>
+    <article class="metric"><div class="label">Haftalık havuz</div><div class="value">2.500 TL</div><div class="hint">10 × 250 TL</div></article>
     <article class="metric"><div class="label">Dağıtılan</div><div class="value" id="distributed">0 TL</div><div class="hint" id="distributionHint">Sonuçlar tamamlanınca</div></article>
   </section>
 
   <section class="layout">
     <article class="panel">
-      <div class="panel-head"><h2>Haftalık sıralama</h2><span id="tableMeta">9 oyuncu • canlı veri</span></div>
+      <div class="panel-head"><h2>Haftalık sıralama</h2><span id="tableMeta">10 oyuncu • canlı veri</span></div>
       <div class="table-wrap"><table>
         <thead><tr><th>Sıra</th><th>Oyuncu</th><th>Hafta</th><th>Genel</th><th>Bu hafta</th><th>Dönem</th><th>Sezon</th><th>Durum</th></tr></thead>
         <tbody id="rows"></tbody>
@@ -76,10 +76,10 @@ details{margin-top:16px;background:var(--surface);border:1px solid var(--line);b
 
     <aside class="side">
       <section class="side-card"><h3>Haftalık ödül planı</h3><div class="prizes">
-        <div class="prize"><div class="medal">1</div><span>Birinci</span><strong>1.125 TL</strong></div>
-        <div class="prize"><div class="medal">2</div><span>İkinci</span><strong>675 TL</strong></div>
-        <div class="prize"><div class="medal">3</div><span>Üçüncü</span><strong>450 TL</strong></div>
-      </div><div class="pool"><span>Toplam havuz</span><b>2.250 TL</b></div></section>
+        <div class="prize"><div class="medal">1</div><span>Birinci</span><strong>1.250 TL</strong></div>
+        <div class="prize"><div class="medal">2</div><span>İkinci</span><strong>750 TL</strong></div>
+        <div class="prize"><div class="medal">3</div><span>Üçüncü</span><strong>500 TL</strong></div>
+      </div><div class="pool"><span>Toplam havuz</span><b>2.500 TL</b></div></section>
       <section class="side-card"><h3>Resmî bağlantılar</h3><div class="links">
         <a class="link" href="https://www.kicktipp.com/tsl-2026-2027/overview" target="_blank" rel="noopener">Kicktipp ligi <span>↗</span></a>
         <a class="link" href="https://docs.google.com/spreadsheets/d/10gZQBlpd2sSoJKC1PiU-b_2C0a46zRzFUUxRanyvO5E/edit" target="_blank" rel="noopener">Ayrıntılı canlı tablo <span>↗</span></a>
@@ -97,12 +97,12 @@ details{margin-top:16px;background:var(--surface);border:1px solid var(--line);b
 </main>
 <script>
 const CSV_URL='https://docs.google.com/spreadsheets/d/10gZQBlpd2sSoJKC1PiU-b_2C0a46zRzFUUxRanyvO5E/gviz/tq?tqx=out:csv&sheet=G%C3%BCncel%20Hafta';
-const expected=['Yapo','Görkem','aslyzc','Alatas','Cemku','Akropol','Canberk','BabaAffetmez','Mhr'];
+const expected=['Baktaşk','Alatas','Cemku','Yapo','aslyzc','BabaAffetmez','Mhr','Akropol','Canberk','Görkem'];
 const fallback=expected.map(name=>({rank:'1',name,week:'0',total:'0',weekly:'0',period:'0',season:'0',state:'VERİ YOK / GEÇİCİ'}));
 function parseCSV(text){let rows=[],row=[],cell='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&q&&n==='"'){cell+='"';i++}else if(c==='"'){q=!q}else if(c===','&&!q){row.push(cell);cell=''}else if((c==='\n'||c==='\r')&&!q){if(c==='\r'&&n==='\n')i++;row.push(cell);rows.push(row);row=[];cell=''}else cell+=c}if(cell||row.length){row.push(cell);rows.push(row)}return rows}
 function number(v){return Number(String(v||'0').replace(/[₺.\s]/g,'').replace(',','.').replace(/[^0-9.-]/g,''))||0}
 function money(v){return new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY',minimumFractionDigits:0,maximumFractionDigits:2}).format(number(v))}
-function read(rows){const meta={};rows.forEach(r=>{if(r[0])meta[r[0].trim()]=(r[1]||'').trim()});const h=rows.findIndex(r=>r.includes('Oyuncu')&&r.includes('Sıra'));if(h<0)throw Error('Başlık satırı bulunamadı');const players=rows.slice(h+1).filter(r=>expected.includes((r[1]||'').trim())).map(r=>({rank:r[0]||'—',name:r[1],week:r[2]||'0',total:r[3]||'0',weekly:r[8]||'0',period:r[9]||'0',season:r[10]||'0',state:r[7]||'—'}));if(players.length!==9)throw Error('Katılımcı sayısı doğrulanamadı');meta['Rapor etiketi']=rows[0]?.[1]||meta['Rapor etiketi']||'';return{meta,players}}
+function read(rows){const meta={};rows.forEach(r=>{if(r[0])meta[r[0].trim()]=(r[1]||'').trim()});const h=rows.findIndex(r=>r.includes('Oyuncu')&&r.includes('Sıra'));if(h<0)throw Error('Başlık satırı bulunamadı');const players=rows.slice(h+1).filter(r=>expected.includes((r[1]||'').trim())).map(r=>({rank:r[0]||'—',name:r[1],week:r[2]||'0',total:r[3]||'0',weekly:r[8]||'0',period:r[9]||'0',season:r[10]||'0',state:r[7]||'—'}));if(players.length!==10)throw Error('Katılımcı sayısı doğrulanamadı');meta['Rapor etiketi']=rows[0]?.[1]||meta['Rapor etiketi']||'';return{meta,players}}
 function render(data){const {meta,players}=data;const resultExists=players.some(p=>number(p.week)>0||number(p.weekly)>0);const status=meta['Rapor etiketi']||'Güncel haftalık rapor';const week=meta['Hafta']||'1';const updated=(meta['Veri çekim zamanı']||'—').replace(' (Europe/Istanbul)','');const distributed=players.reduce((s,p)=>s+number(p.weekly),0);document.getElementById('weekTitle').textContent=week+'. Hafta';document.getElementById('updated').textContent=updated;document.getElementById('footerTime').textContent=updated;document.getElementById('reportStatus').textContent=resultExists?'Haftalık sonuçlar yayımlandı':'Sonuçlar bekleniyor';document.getElementById('statusNote').textContent=status;document.getElementById('statusTag').textContent=resultExists?'GÜNCEL':'GEÇİCİ';document.getElementById('activePlayers').textContent=players.length;document.getElementById('distributed').textContent=money(distributed);document.getElementById('distributionHint').textContent=resultExists?'Havuz kontrolü uygulanır':'Sonuçlar tamamlanınca';document.getElementById('emptyState').classList.toggle('visible',!resultExists);document.getElementById('rows').innerHTML=players.map(p=>`<tr><td class="rank">${p.rank}</td><td class="player">${p.name}</td><td>${p.week}</td><td>${p.total}</td><td class="${number(p.weekly)?'money':'empty-money'}">${money(p.weekly)}</td><td class="${number(p.period)?'money':'empty-money'}">${money(p.period)}</td><td class="${number(p.season)?'money':'empty-money'}">${money(p.season)}</td><td><span class="state">${p.state}</span></td></tr>`).join('')}
 async function load(){try{const r=await fetch(CSV_URL,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);render(read(parseCSV(await r.text())))}catch(e){console.error(e);document.getElementById('error').classList.add('visible');render({meta:{'Rapor durumu':'Canlı veri bağlantısı geçici olarak kullanılamıyor.','Veri çekim zamanı':'Son doğrulanmış görünüm'},players:fallback})}}
 load();setInterval(load,5*60*1000);
